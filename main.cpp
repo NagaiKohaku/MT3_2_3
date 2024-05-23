@@ -46,24 +46,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
-		//法線と線の内積を求める
-		float dot = Vector3Math::Dot(plane.normal, segment.diff);
-
-		//垂直 = 並行であるので、衝突しているはずがない
-		if (dot == 0.0f) {
-			//return false;
-		}
-
-		//tを求める
-		float t = (plane.distance - Vector3Math::Dot(segment.origin, plane.normal)) / dot;
-
 		ImGui::DragFloat3("segmentOrigin", &segment.origin.x, 0.01f);
 		ImGui::DragFloat3("segmentDiff", &segment.diff.x, 0.01f);
 		ImGui::DragFloat3("plateNormal", &plane.normal.x, 0.01f);
 		ImGui::DragFloat3("cameraTranslate", &cameraTranslate.x, 0.01f);
 		ImGui::DragFloat3("cameraRotate", &cameraRotate.x, 0.01f);
-		ImGui::InputFloat("t", &t);
-		ImGui::InputFloat("dot", &dot);
+
 
 		plane.normal = Vector3Math::Normalize(plane.normal);
 
@@ -125,6 +113,7 @@ bool IsCollision(const Segment& segment, const Plane& plane) {
 	if (t >= 0.0f && t <= 1.0f) {
 		return true;
 	}
+
 	return false;
 
 }
